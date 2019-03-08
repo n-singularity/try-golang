@@ -1,6 +1,11 @@
-package Controllers
+package Controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
+
+type Controller struct {}
+
 
 func IndexWeb1(c *gin.Context) {
 	c.HTML(200, "ping/index.tmpl",gin.H{})
@@ -8,10 +13,4 @@ func IndexWeb1(c *gin.Context) {
 
 func IndexWeb2(c *gin.Context) {
 	c.HTML(200, "pong/index.tmpl",gin.H{})
-}
-
-func IndexApi(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "api pong",
-	})
 }
