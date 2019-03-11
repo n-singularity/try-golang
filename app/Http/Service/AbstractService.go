@@ -11,18 +11,18 @@ func ClassAbstractService(service InterfaceService) AbstractService {
 	return abstractEntity
 }
 
-func (thisIs *AbstractService) SetX(input int) {
-	thisIs.x = input
+func (it *AbstractService) SetX(input int) {
+	it.x = input
 }
 
-func (thisIs AbstractService) GetX() int{
-	return thisIs.x
+func (it AbstractService) GetX() int{
+	return it.x
 }
 
-func (thisIs *AbstractService) Sum() int {
-	return thisIs.GetX()+thisIs.Service.GetY()+thisIs.Service.GetZ()
+func (it *AbstractService) Sum() int {
+	return it.GetX()+it.Service.GetY()+it.Service.GetZ()
 }
 
-func (thisIs *AbstractService) UpdateService(service InterfaceService) {
-	thisIs.Service = service
+func (it *AbstractService) UpdateService(service InterfaceService) {
+	it.Service = service
 }

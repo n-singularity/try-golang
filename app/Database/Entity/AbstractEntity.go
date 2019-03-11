@@ -3,7 +3,7 @@ package Entity
 import "github.com/jinzhu/gorm"
 
 type AbstractEntity struct {
-	Entity interface{}
+	Entity InterfaceEntity
 }
 
 func ClassAbstractEntity(entity InterfaceEntity) AbstractEntity {
@@ -12,30 +12,34 @@ func ClassAbstractEntity(entity InterfaceEntity) AbstractEntity {
 	return abstractEntity
 }
 
-func (thisIs AbstractEntity) Save() {
+func (it AbstractEntity) Save() {
 	db, err := gorm.Open("sqlite3", "test.db")
 	if err != nil {
 		panic("failed to connect database")
 	}
 
-	if db.NewRecord(thisIs.Entity) {
-		db.Create(&thisIs.Entity)
+	if db.NewRecord(it.Entity) {
+		db.Create(&it.Entity)
 	} else {
-		db.Save(&thisIs.Entity)
+		db.Save(&it.Entity)
 	}
 
 	err = db.Close()
 }
 
-func (thisIs AbstractEntity) Remove() {
+func (it AbstractEntity) Remove() {
 	db, err := gorm.Open("sqlite3", "test.db")
 	if err != nil {
 		panic("failed to connect database")
 	}
 
-	if !db.NewRecord(thisIs.Entity) {
-		db.Delete(&thisIs.Entity)
+	if !db.NewRecord(it.Entity) {
+		db.Delete(&it.Entity)
 	}
 
 	err = db.Close()
+}
+
+func (it *AbstractEntity) UpdateEntityValue(entity InterfaceEntity) {
+	it.Entity = entity
 }

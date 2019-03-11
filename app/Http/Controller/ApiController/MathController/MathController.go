@@ -16,7 +16,7 @@ func ClassMathController() MathController {
 }
 
 
-func (thisIs MathController) Sum(c *gin.Context) {
+func (it MathController) Sum(c *gin.Context) {
 	mathService := Service.ClassMathService()
 	mathService.SetX(1)
 	mathService.SetY(2)

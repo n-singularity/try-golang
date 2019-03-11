@@ -15,7 +15,7 @@ func ClassProductController() ProductController {
 }
 
 
-func (thisIs ProductController) Index(c *gin.Context) {
+func (it ProductController) Index(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "product",
 	})

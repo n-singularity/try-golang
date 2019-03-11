@@ -22,14 +22,18 @@ func ClassProduct() Product {
 	return product
 }
 
-func (p Product) GetId()  uint{
-	return p.ID
+func (it Product) GetId()  uint{
+	return it.ID
 }
 
-func (p Product) ToArray(arrayType string, getParent bool, getChild bool, addFunction types.Slice)  {
+func (it Product) ToArray(arrayType string, getParent bool, getChild bool, addFunction types.Slice)  {
 
 }
 
-func (p Product) Rule()  {
+func (it Product) Rule()  {
 
+}
+
+func (it *Product) updateParent() {
+	it.AbstractEntity.Entity = it
 }

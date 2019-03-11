@@ -12,25 +12,25 @@ func ClassMathService() MathService {
 	return service
 }
 
-func (thisIs *MathService) SetY(input int){
-	thisIs.y = input
-	thisIs.updateParent()
+func (it *MathService) SetY(input int){
+	it.y = input
+	it.updateParent()
 }
 
-func (thisIs *MathService) SetZ(input int) {
-	thisIs.z = input
-	thisIs.updateParent()
+func (it *MathService) SetZ(input int) {
+	it.z = input
+	it.updateParent()
 }
 
-func (thisIs MathService) GetY() int{
-	return thisIs.y
+func (it MathService) GetY() int{
+	return it.y
 }
 
-func (thisIs MathService) GetZ() int {
-	return thisIs.z
+func (it MathService) GetZ() int {
+	return it.z
 }
 
-func (thisIs *MathService) updateParent() {
-	thisIs.AbstractService.UpdateService(thisIs)
+func (it *MathService) updateParent() {
+	it.AbstractService.UpdateService(it)
 }
 
