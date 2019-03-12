@@ -13,11 +13,8 @@ type Product struct {
 }
 
 func ClassProduct() Product {
-	var interfaceEntity InterfaceEntity
 	var product Product
 	product.AbstractEntity = ClassAbstractEntity(product)
-	interfaceEntity = product
-	_=interfaceEntity
 
 	return product
 }
