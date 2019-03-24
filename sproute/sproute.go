@@ -7,53 +7,57 @@ import (
 	"strings"
 )
 
-type RouteStruck struct {
-	method     string
-	path       string
-	controller ControllerFunc
-}
-
 type Route struct{}
 
 type ControllerFunc func(*http.Request, H) Res
 
-func (it H) ToString() string{
+func (it H) ToString() string {
 	js, _ := json.Marshal(it)
 	return string(js)
 }
 
-func (it H) Get(key string) string{
-	return it[key].(string)
-}
+func (it H) Get(key string) string {
+	if it[key] != nil{
+		return it[key].(string)
+	}
 
-type MiddlewareFunc func()
+	return ""
+}
 
 type MethodHandler func(http.Request, ControllerFunc)
 
 // H is a shortcut for map[string]interface{}
 type H map[string]interface{}
 
-var RouteList []RouteStruck
-
-var request http.Request
-
-var response Res
+var RouteList = make(map[string]RouteStruck)
 
 func Build() Route {
 	return Route{}
 }
 
-func AddNode(method string, path string, controller ControllerFunc) {
+func AddNode(method string, path string, controller ControllerFunc) RouteStruck {
 
 	if path[0] != '/' {
 		panic("Path has to start with a /.")
 	}
+	route := RouteStruck{}
 
-	RouteList = append(RouteList, RouteStruck{method, path, controller})
+	route.method = method
+	route.path = path
+	route.controller = controller
+
+	RouteList[path] = route
+
+	return route
 }
 
-func (it *Route) GET(p string, controller ControllerFunc) {
-	AddNode("GET", p, controller)
+func UpdateNode(route RouteStruck) RouteStruck {
+	RouteList[route.path] = route
+	return route
+}
+
+func (it *Route) GET(p string, controller ControllerFunc) RouteStruck {
+	return AddNode("GET", p, controller)
 }
 
 func (it Route) Handler(w http.ResponseWriter, r *http.Request) {
@@ -70,7 +74,17 @@ func (it Route) Handler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		//Before Middleware
+		for _, middleware := range value.middleware {
+			middleware.Before(r, params)
+		}
+
 		res := value.controller(r, params)
+
+		//After Middleware
+		for _, middleware := range value.middleware {
+			middleware.After(res, params)
+		}
 
 		w.WriteHeader(res.code)
 		fmt.Fprintf(w, res.getResponse())
