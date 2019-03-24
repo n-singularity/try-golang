@@ -2,8 +2,9 @@ package main
 
 import (
 	"bufio"
-	"firstProject/routes"
-	"github.com/gin-gonic/gin"
+	"firstProject/app/Http/Controller"
+	"firstProject/sproute"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -15,14 +16,15 @@ func main() {
 
 	writeEnv()
 
-	g := gin.Default()
-	g.LoadHTMLGlob("resources/templates/**/*")
+	route := sproute.Build()
 
-	g = routes.Route(g)
+	route.GET("/api/:word", func(request *http.Request, params sproute.H) sproute.Res {
+		return sproute.ResponseString(200, params["word"])
+	})
 
-	err = g.Run() // listen and serve on 0.0.0.0:8080
+	route.GET("/api2/:word", Controller.IndexWeb1)
 
-	check(err)
+	route.Listen(":9900")
 }
 
 

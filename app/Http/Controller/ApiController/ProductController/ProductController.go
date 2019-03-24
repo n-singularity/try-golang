@@ -2,6 +2,7 @@ package ProductController
 
 import (
 	"firstProject/app/Http/Controller"
+	"firstProject/sproute"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +17,7 @@ func ClassProductController() ProductController {
 
 
 func (it ProductController) Index(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "product",
+	c.JSON(200, sproute.H{
+		"message": 123,
 	})
 }

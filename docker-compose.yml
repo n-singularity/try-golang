@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0.15
+    volumes:
+      - ./docker/data/msyql:/var/lib/mysql
+      - ./docker/init:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=loket
+    ports:
+      - "3301:3306"
+    networks:
+      - golang_01
+
+  golang:
+    image: golang:1.12.1
+    ports:
+      - "9901:9900"
+    networks:
+      - golang_01
+
+networks:
+  golang_01:

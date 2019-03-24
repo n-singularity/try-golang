@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ApiList(r *gin.Engine) *gin.Engine {
+func ApiList(r *gin.Engine) string {
 
 	api := r.Group("/api")
 
