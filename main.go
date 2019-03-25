@@ -21,13 +21,15 @@ func main() {
 
 	route.GET("/api/:word", func(request *http.Request, params sproute.H) sproute.Res {
 		return sproute.ResponseString(200, params["word"])
-	}).Middleware(middleware.FirstMiddleware{Params: sproute.H{"name":"ok"}}).Middleware(middleware.AnotherMiddleware{})
+	}).Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}}).Middleware(middleware.AnotherMiddleware{})
 
 	route.GET("/api2/:word", Controller.IndexWeb1)
 
+	v1:=route.GROUP("/v1").Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}})
+	v1.GET("/api", Controller.IndexWeb1)
+
 	route.Listen(":9900")
 }
-
 
 func check(e error) {
 	if e != nil {
@@ -35,16 +37,16 @@ func check(e error) {
 	}
 }
 
-func writeEnv()  {
+func writeEnv() {
 	file, err := os.Open(".env")
 	check(err)
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		if scanner.Text()!=""{
+		if scanner.Text() != "" {
 			s := strings.Split(scanner.Text(), "=")
-			if len(s)==2{
+			if len(s) == 2 {
 				err = os.Setenv(s[0], s[1])
 				check(err)
 			}

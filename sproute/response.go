@@ -1,10 +1,14 @@
 package sproute
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 type Res struct {
 	code      int
 	typeValue string
+	cookie    []http.Cookie
 	response  interface{}
 }
 
@@ -25,17 +29,17 @@ func (it *Res) SetResponse(r interface{}) {
 }
 
 func (it Res) getResponse() string {
-	if(it.typeValue == "json"){
+	if (it.typeValue == "json") {
 		js, _ := json.Marshal(it.response)
 		return string(js)
-	}else if(it.typeValue == "string"){
+	} else if (it.typeValue == "string") {
 		return it.response.(string)
 	}
 
 	return ""
 }
 
-func ResponseString(code int, response interface{}) Res  {
+func ResponseString(code int, response interface{}) Res {
 	res := Response()
 	res.SetCode(code)
 	res.SetType("string")
@@ -43,7 +47,7 @@ func ResponseString(code int, response interface{}) Res  {
 	return res
 }
 
-func ResponseJson(code int, response interface{}) Res  {
+func ResponseJson(code int, response interface{}) Res {
 	res := Response()
 	res.SetCode(code)
 	res.SetType("json")

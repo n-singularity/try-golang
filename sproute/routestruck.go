@@ -22,7 +22,7 @@ type MiddlewareInterface interface {
 	SetNext(MiddlewareInterface) MiddlewareInterface
 }
 
-func (r RouteStruck) Middleware(middleware MiddlewareInterface) RouteStruck {
-	r.middleware = append(r.middleware, middleware)
-	return UpdateNode(r)
+func (it RouteStruck) Middleware(middleware MiddlewareInterface) RouteStruck {
+	it.middleware = append(it.middleware, middleware)
+	return UpdateNode(it)
 }
