@@ -17,7 +17,7 @@ func (it H) ToString() string {
 }
 
 func (it H) Get(key string) string {
-	if it[key] != nil{
+	if it[key] != nil {
 		return it[key].(string)
 	}
 
@@ -74,17 +74,20 @@ func (it Route) Handler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		//Before Middleware
-		for _, middleware := range value.middleware {
-			middleware.Before(r, params)
+		//Set Middleware
+		controller := value.controller
+
+
+		var middlewareStruck Middleware
+		var middleware MiddlewareInterface
+		middleware = middlewareStruck
+		middleware = middleware.SetController(controller)
+
+		for i := len(value.middleware); i > 0; i-- {
+			middleware = value.middleware[i-1].SetNext(middleware)
 		}
 
-		res := value.controller(r, params)
-
-		//After Middleware
-		for _, middleware := range value.middleware {
-			middleware.After(res, params)
-		}
+		res := middleware.Next(r, params)
 
 		w.WriteHeader(res.code)
 		fmt.Fprintf(w, res.getResponse())

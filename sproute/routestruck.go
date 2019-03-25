@@ -6,15 +6,23 @@ type RouteStruck struct {
 	method     string
 	path       string
 	controller ControllerFunc
-	middleware []MiddlewareFunc
+	middleware []MiddlewareInterface
 }
 
-type MiddlewareFunc interface {
-	Before(req *http.Request, rp H)
-	After(res Res, rp H)
+type MiddlewareStruck struct {
+	MiddlewareInterface
+	method string
+	path   string
+	next   ControllerFunc
 }
 
-func (r RouteStruck) Middleware(middleware MiddlewareFunc) RouteStruck{
+type MiddlewareInterface interface {
+	Next(req *http.Request, rp H) Res
+	SetController(controllerFunc ControllerFunc) MiddlewareInterface
+	SetNext(MiddlewareInterface) MiddlewareInterface
+}
+
+func (r RouteStruck) Middleware(middleware MiddlewareInterface) RouteStruck {
 	r.middleware = append(r.middleware, middleware)
 	return UpdateNode(r)
 }

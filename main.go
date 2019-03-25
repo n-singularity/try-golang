@@ -21,7 +21,7 @@ func main() {
 
 	route.GET("/api/:word", func(request *http.Request, params sproute.H) sproute.Res {
 		return sproute.ResponseString(200, params["word"])
-	}).Middleware(middleware.ExampleMiddleware{Params: sproute.H{"name":"ok"}})
+	}).Middleware(middleware.FirstMiddleware{Params: sproute.H{"name":"ok"}}).Middleware(middleware.AnotherMiddleware{})
 
 	route.GET("/api2/:word", Controller.IndexWeb1)
 
