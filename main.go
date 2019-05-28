@@ -2,10 +2,8 @@ package main
 
 import (
 	"bufio"
-	"firstProject/app/Http/Controller"
-	"firstProject/app/Http/Middlewares"
+	"firstProject/routes"
 	"firstProject/sproute"
-	"net/http"
 	"os"
 	"strings"
 )
@@ -17,18 +15,11 @@ func main() {
 
 	writeEnv()
 
-	route := sproute.Build()
+	r := sproute.Build()
 
-	route.GET("/api/:word", func(request *http.Request, params sproute.H) sproute.Res {
-		return sproute.ResponseString(200, params["word"])
-	}).Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}}).Middleware(middleware.AnotherMiddleware{})
+	r = routes.Route(r)
 
-	route.GET("/api2/:word", Controller.IndexWeb1)
-
-	v1:=route.GROUP("/v1").Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}})
-	v1.GET("/api", Controller.IndexWeb1)
-
-	route.Listen(":9900")
+	r.Listen(":9900")
 }
 
 func check(e error) {

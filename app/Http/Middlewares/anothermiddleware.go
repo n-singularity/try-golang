@@ -7,13 +7,10 @@ import (
 
 type AnotherMiddleware struct {
 	Params sproute.H
-
 	sproute.Middleware
 }
 
 func (m AnotherMiddleware) Next(req *http.Request, rp sproute.H) sproute.Res {
-	println("2222222")
-
 	res := m.NextMiddleware.Next(req, rp)
 
 	return res

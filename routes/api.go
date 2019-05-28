@@ -1,18 +1,17 @@
 package routes
 
 import (
-	"firstProject/app/Http/Controller/ApiController/MathController"
-	"firstProject/app/Http/Controller/ApiController/ProductController"
-	"github.com/gin-gonic/gin"
+	"firstProject/app/Http/Middlewares"
+	"firstProject/sproute"
+	"net/http"
 )
 
-func ApiList(r *gin.Engine) string {
+func ApiList(r sproute.Route) sproute.Route {
+	v1:=r.GROUP("/api/v1").Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}})
 
-	api := r.Group("/api")
-
-	api.GET("/product", ProductController.ClassProductController().Index)
-
-	api.GET("/math/sum", MathController.ClassMathController().Sum)
+	v1.GET("/:word", func(request *http.Request, params sproute.H) sproute.Res {
+		return sproute.ResponseString(200, params["word"])
+	}).Middleware(middleware.FirstMiddleware{Params: sproute.H{"name": "ok"}}).Middleware(middleware.AnotherMiddleware{})
 
 	return r
 }

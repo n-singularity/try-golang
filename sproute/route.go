@@ -46,7 +46,9 @@ func (it RouteGroup) Middleware(middleware MiddlewareInterface) RouteGroup {
 	return it
 }
 
-func (it *RouteGroup) GET(p string, controller ControllerFunc) {
+func (it *RouteGroup) GET(p string, controller ControllerFunc) RouteStruck {
 	r := AddNode("GET", it.prefix+p, controller)
 	for _, mdw := range it.middleware {r.Middleware(mdw)}
+
+	return r
 }

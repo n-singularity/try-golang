@@ -1,7 +1,10 @@
 package routes
 
-func Route(method MethodHandler, p string, controller ControllerFunc) string {
+import "firstProject/sproute"
 
-	method(request, controller)
-	return  "aaaaaa"
+func Route(r sproute.Route) sproute.Route{
+	r = ApiList(r)
+	r = WebList(r)
+
+	return r
 }

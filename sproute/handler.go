@@ -36,7 +36,6 @@ func (it Route) Handler(w http.ResponseWriter, r *http.Request) {
 
 		w.WriteHeader(res.code)
 		fmt.Fprintf(w, res.getResponse())
-
 		found = true
 		break
 	}

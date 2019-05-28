@@ -11,8 +11,6 @@ type FirstMiddleware struct {
 }
 
 func (m FirstMiddleware) Next(req *http.Request, rp sproute.H) sproute.Res {
-	println("1111111")
-
 	res := m.NextMiddleware.Next(req, rp)
 
 	return res

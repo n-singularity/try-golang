@@ -9,9 +9,8 @@ import (
 type Controller struct{}
 
 func IndexWeb1(request *http.Request, params sproute.H) sproute.Res {
-	return sproute.ResponseJson(200, sproute.H{
-		"message": params.Get("word"),
-	})
+
+	return sproute.ResponseString(200, params.Get("word"))
 }
 
 func IndexWeb2(c *gin.Context) {
