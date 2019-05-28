@@ -19,7 +19,7 @@ func main() {
 
 	r = routes.Route(r)
 
-	r.Listen(":9900")
+	r.Listen(":"+os.Getenv("PORT"))
 }
 
 func check(e error) {
