@@ -3,6 +3,7 @@ package Service
 type AbstractService struct {
 	Service InterfaceService
 	x int
+	a string
 }
 
 func ClassAbstractService(service InterfaceService) AbstractService {

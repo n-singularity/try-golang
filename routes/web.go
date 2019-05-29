@@ -6,7 +6,7 @@ import (
 )
 
 func WebList(r sproute.Route) sproute.Route{
-	r.GET("/:word", Controller.IndexWeb1)
+	r.GET("/:word", Controller.ClassController().IndexWeb1)
 
 	return r
 }

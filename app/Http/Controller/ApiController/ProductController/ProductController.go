@@ -3,7 +3,7 @@ package ProductController
 import (
 	"firstProject/app/Http/Controller"
 	"firstProject/sproute"
-	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type ProductController struct {
@@ -16,8 +16,8 @@ func ClassProductController() ProductController {
 }
 
 
-func (it ProductController) Index(c *gin.Context) {
-	c.JSON(200, sproute.H{
-		"message": 123,
+func (it ProductController) Index(request *http.Request, params sproute.H) sproute.Res {
+	return sproute.ResponseJson(200, sproute.H{
+		"message": "test",
 	})
 }

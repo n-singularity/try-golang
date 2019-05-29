@@ -3,7 +3,8 @@ package MathController
 import (
 	"firstProject/app/Http/Controller"
 	"firstProject/app/Http/Service"
-	"github.com/gin-gonic/gin"
+	"firstProject/sproute"
+	"net/http"
 )
 
 type MathController struct {
@@ -15,14 +16,13 @@ func ClassMathController() MathController {
 	return controller
 }
 
-
-func (it MathController) Sum(c *gin.Context) {
+func (it MathController) Sum(request *http.Request, params sproute.H) sproute.Res {
 	mathService := Service.ClassMathService()
 	mathService.SetX(1)
 	mathService.SetY(2)
 	mathService.SetZ(3)
 
-	c.JSON(200, gin.H{
+	return sproute.ResponseJson(200, sproute.H{
 		"message": mathService.Sum(),
 	})
 }

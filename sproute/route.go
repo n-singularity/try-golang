@@ -52,3 +52,10 @@ func (it *RouteGroup) GET(p string, controller ControllerFunc) RouteStruck {
 
 	return r
 }
+
+func (it *RouteGroup) POST(p string, controller ControllerFunc) RouteStruck {
+	r := AddNode("POST", it.prefix+p, controller)
+	for _, mdw := range it.middleware {r.Middleware(mdw)}
+
+	return r
+}
